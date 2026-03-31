@@ -35,6 +35,47 @@ document.querySelectorAll(".city").forEach((el, i) => {
   el.style.transitionDelay = i * 20 + "ms";
 });
 
+const navMenuToggle = document.getElementById("navMenuToggle");
+const mobileMenu = document.getElementById("mobileMenu");
+const MOBILE_NAV_BREAKPOINT = 1024;
+
+function setMobileMenuOpen(isOpen) {
+  if (!navMenuToggle || !mobileMenu) {
+    return;
+  }
+
+  mobileMenu.hidden = !isOpen;
+  navMenuToggle.classList.toggle("is-open", isOpen);
+  navMenuToggle.setAttribute("aria-expanded", String(isOpen));
+  navMenuToggle.setAttribute("aria-label", isOpen ? "Close navigation menu" : "Open navigation menu");
+  document.body.classList.toggle("no-scroll", isOpen);
+}
+
+if (navMenuToggle && mobileMenu) {
+  navMenuToggle.addEventListener("click", () => {
+    const isOpen = navMenuToggle.getAttribute("aria-expanded") === "true";
+    setMobileMenuOpen(!isOpen);
+  });
+
+  mobileMenu.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => {
+      setMobileMenuOpen(false);
+    });
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      setMobileMenuOpen(false);
+    }
+  });
+
+  window.addEventListener("resize", () => {
+    if (window.innerWidth > MOBILE_NAV_BREAKPOINT) {
+      setMobileMenuOpen(false);
+    }
+  });
+}
+
 const proposalForm = document.getElementById("proposalForm");
 const proposalStatus = document.getElementById("proposalStatus");
 const proposalError = document.getElementById("proposalError");
