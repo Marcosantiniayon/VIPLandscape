@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/",
+      "destination": "/vip-landscape-v2.html"
+    }
+  ]
+}
