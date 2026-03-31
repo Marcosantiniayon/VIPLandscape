@@ -9,8 +9,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-  <script type="module" crossorigin src="/assets/vipLandscapeV2-Bq4-FaCB.js"></script>
-  <link rel="stylesheet" crossorigin href="/assets/vipLandscapeV2-BgYwC7Rv.css">
+  <script type="module" crossorigin src="/assets/vipLandscapeV2-BF7CiVrW.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/vipLandscapeV2-Dd7DbPeu.css">
 </head>
 <body>
 
@@ -162,7 +162,6 @@
       Sustainability is built into our process through water-smart irrigation, climate-appropriate plant selection, and practical maintenance planning. The result is a landscape that looks premium, operates efficiently, and stays healthy year-round.
     </p>
     <a href="#contact" class="btn-primary" style="background:var(--stone);color:var(--white);padding:0.9rem 2rem;font-family:var(--mono);font-size:0.72rem;letter-spacing:0.14em;text-transform:uppercase;text-decoration:none;display:inline-block;transition:background 0.2s;">Schedule a Site Walk</a>
-
     <div class="owners-photo-wrap">
       <div class="owners-photo owners-photo-placeholder" role="img" aria-label="Founders portrait coming soon">
         <div class="placeholder-kicker">Founders Photo</div>
@@ -349,19 +348,18 @@
     <div class="proposal-status" id="proposalStatus" hidden>
       Thanks. Your proposal request has been sent. We&#39;ll follow up shortly.
     </div>
+    <div class="proposal-status proposal-status-error" id="proposalError" hidden>
+      We couldn&#39;t send your request right now. Please try again in a few minutes.
+    </div>
 
     <form
       class="proposal-form"
       id="proposalForm"
-      action="https://formsubmit.co/admin@vipland.info"
+      action="https://formspree.io/f/REPLACE_WITH_FORM_ID"
       method="POST"
     >
-      <input type="hidden" name="_subject" value="VIP Landscape Proposal Request">
-      <input type="hidden" name="_captcha" value="false">
-      <input type="hidden" name="_template" value="table">
-      <input type="hidden" name="_next" id="proposalNext" value="">
+      <input type="hidden" name="subject" value="VIP Landscape Proposal Request">
       <input type="hidden" name="Request Summary" id="requestSummaryField" value="">
-      <input type="text" name="_honey" class="proposal-honeypot" tabindex="-1" autocomplete="off">
 
       <div class="proposal-services">
         <div class="proposal-services-head">
@@ -482,7 +480,6 @@
         <button type="submit" class="proposal-submit">Get My Proposal &#8594;</button>
         <div class="proposal-meta-wrap">
           <span class="proposal-meta">Response target: within 1 business day.</span>
-          <span class="lic-badge">Licensed &#183; Bonded &#183; Insured &#183; ROC #325617</span>
         </div>
       </div>
     </form>

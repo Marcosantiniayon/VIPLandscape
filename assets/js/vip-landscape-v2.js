@@ -36,8 +36,8 @@ document.querySelectorAll(".city").forEach((el, i) => {
 });
 
 const proposalForm = document.getElementById("proposalForm");
-const proposalNext = document.getElementById("proposalNext");
 const proposalStatus = document.getElementById("proposalStatus");
+const proposalError = document.getElementById("proposalError");
 const requestSummaryField = document.getElementById("requestSummaryField");
 const otherServiceCheckbox = document.getElementById("otherServiceCheckbox");
 const otherServiceField = document.getElementById("otherServiceField");
@@ -117,22 +117,6 @@ function syncOtherServiceField() {
   }
 }
 
-if (proposalNext) {
-  const nextUrl = new URL(window.location.href);
-
-  nextUrl.searchParams.set("proposal", "success");
-  nextUrl.hash = "contact";
-  proposalNext.value = nextUrl.toString();
-}
-
-if (proposalStatus) {
-  const params = new URLSearchParams(window.location.search);
-
-  if (params.get("proposal") === "success") {
-    proposalStatus.hidden = false;
-  }
-}
-
 serviceCheckboxes.forEach((checkbox) => {
   checkbox.addEventListener("change", () => {
     syncOtherServiceField();
@@ -170,10 +154,95 @@ document.querySelectorAll("[data-proposal-service]").forEach((link) => {
 });
 
 if (proposalForm) {
-  proposalForm.addEventListener("submit", () => {
+  proposalForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
     syncGroupPanels();
     syncOtherServiceField();
     updateRequestSummary();
+
+    if (!proposalForm.checkValidity()) {
+      proposalForm.reportValidity();
+      return;
+    }
+
+    const endpoint = proposalForm.getAttribute("action") ?? "";
+    const submitButton = proposalForm.querySelector(".proposal-submit");
+    const originalButtonText = submitButton?.textContent ?? "";
+
+    if (proposalStatus) {
+      proposalStatus.hidden = true;
+    }
+
+    if (proposalError) {
+      proposalError.hidden = true;
+    }
+
+    if (!endpoint || endpoint.includes("REPLACE_WITH_FORM_ID")) {
+      if (proposalError) {
+        proposalError.textContent = "Formspree endpoint is not set yet. Replace REPLACE_WITH_FORM_ID with your real Formspree form ID.";
+        proposalError.hidden = false;
+      }
+
+      return;
+    }
+
+    if (submitButton) {
+      submitButton.disabled = true;
+      submitButton.textContent = "Sending...";
+    }
+
+    try {
+      const response = await fetch(endpoint, {
+        method: "POST",
+        headers: {
+          Accept: "application/json"
+        },
+        body: new FormData(proposalForm)
+      });
+
+      if (response.ok) {
+        proposalForm.reset();
+        syncGroupPanels();
+        syncOtherServiceField();
+        updateRequestSummary();
+
+        if (proposalStatus) {
+          proposalStatus.hidden = false;
+        }
+      } else {
+        let errorMessage = "We couldn't send your request right now. Please try again in a few minutes.";
+
+        try {
+          const payload = await response.json();
+
+          if (Array.isArray(payload?.errors) && payload.errors[0]?.message) {
+            errorMessage = payload.errors[0].message;
+          }
+        } catch {
+          // Keep default message when no JSON payload is returned.
+        }
+
+        if (response.status === 429) {
+          errorMessage = "Too many requests right now. Please wait a minute and try again.";
+        }
+
+        if (proposalError) {
+          proposalError.textContent = errorMessage;
+          proposalError.hidden = false;
+        }
+      }
+    } catch {
+      if (proposalError) {
+        proposalError.textContent = "Network error while sending your request. Check your connection and try again.";
+        proposalError.hidden = false;
+      }
+    } finally {
+      if (submitButton) {
+        submitButton.disabled = false;
+        submitButton.textContent = originalButtonText;
+      }
+    }
   });
 }
 
