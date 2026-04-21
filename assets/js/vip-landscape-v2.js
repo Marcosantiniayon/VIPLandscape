@@ -35,6 +35,290 @@ document.querySelectorAll(".city").forEach((el, i) => {
   el.style.transitionDelay = i * 20 + "ms";
 });
 
+const portfolioCards = Array.from(document.querySelectorAll(".portfolio-card"));
+const portfolioMoreBtn = document.getElementById("portfolioMoreBtn");
+const portfolioSection = document.getElementById("portfolio");
+const extraPortfolioCards = portfolioCards.filter((card) => card.dataset.portfolioExtra === "true");
+
+let portfolioExpanded = false;
+
+let activeLightboxIndex = 0;
+let lightboxElements = null;
+
+function ensurePortfolioImageLoaded(card) {
+  const image = card.querySelector("img");
+
+  if (!image) {
+    return;
+  }
+
+  if (!image.getAttribute("src")) {
+    const source = image.dataset.src;
+
+    if (source) {
+      image.setAttribute("src", source);
+      image.removeAttribute("data-src");
+    }
+  }
+}
+
+function getVisiblePortfolioCards() {
+  return portfolioCards.filter((card) => {
+    if (card.hidden) {
+      return false;
+    }
+
+    const image = card.querySelector("img");
+    return Boolean(image?.getAttribute("src"));
+  });
+}
+
+function getVisiblePortfolioImages() {
+  return getVisiblePortfolioCards()
+    .map((card) => card.querySelector("img"))
+    .filter((img) => Boolean(img));
+}
+
+function waitForImageReady(image) {
+  if (!image) {
+    return Promise.resolve();
+  }
+
+  image.loading = "eager";
+
+  if (image.complete && image.naturalWidth > 0) {
+    return Promise.resolve();
+  }
+
+  if (typeof image.decode === "function") {
+    return image.decode().catch(() => {
+      // Fallback to load events if decode fails.
+      return new Promise((resolve) => {
+        image.addEventListener("load", resolve, { once: true });
+        image.addEventListener("error", resolve, { once: true });
+      });
+    });
+  }
+
+  return new Promise((resolve) => {
+    image.addEventListener("load", resolve, { once: true });
+    image.addEventListener("error", resolve, { once: true });
+  });
+}
+
+async function preloadExtraPortfolioImages() {
+  const tasks = extraPortfolioCards.map((card) => {
+    ensurePortfolioImageLoaded(card);
+    return waitForImageReady(card.querySelector("img"));
+  });
+
+  await Promise.all(tasks);
+}
+
+async function setPortfolioExpanded(isExpanded, options = {}) {
+  const { shouldScrollOnCollapse = false } = options;
+  portfolioExpanded = isExpanded;
+
+  if (portfolioExpanded) {
+    if (portfolioMoreBtn) {
+      portfolioMoreBtn.disabled = true;
+      portfolioMoreBtn.textContent = "Loading...";
+    }
+
+    await preloadExtraPortfolioImages();
+
+    extraPortfolioCards.forEach((card) => {
+      ensurePortfolioImageLoaded(card);
+      card.hidden = false;
+      card.classList.remove("fade-in");
+      card.classList.add("visible");
+      card.style.transitionDelay = "0ms";
+      observer.unobserve(card);
+    });
+  } else {
+    extraPortfolioCards.forEach((card) => {
+      card.hidden = true;
+    });
+
+    if (lightboxElements && !lightboxElements.lightbox.hidden) {
+      closeLightbox();
+    }
+
+    if (shouldScrollOnCollapse) {
+      portfolioSection?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }
+
+  if (portfolioMoreBtn) {
+    portfolioMoreBtn.disabled = false;
+    portfolioMoreBtn.textContent = portfolioExpanded ? "Show Less Work" : "Show More Work";
+    portfolioMoreBtn.setAttribute("aria-expanded", String(portfolioExpanded));
+  }
+}
+
+if (portfolioMoreBtn) {
+  if (extraPortfolioCards.length === 0) {
+    portfolioMoreBtn.hidden = true;
+  } else {
+    setPortfolioExpanded(false);
+    portfolioMoreBtn.addEventListener("click", async () => {
+      const collapsing = portfolioExpanded;
+      await setPortfolioExpanded(!portfolioExpanded, {
+        shouldScrollOnCollapse: collapsing
+      });
+    });
+  }
+}
+
+function ensureLightboxElements() {
+  if (lightboxElements) {
+    return lightboxElements;
+  }
+
+  const lightbox = document.createElement("div");
+  lightbox.className = "lightbox";
+  lightbox.setAttribute("role", "dialog");
+  lightbox.setAttribute("aria-modal", "true");
+  lightbox.setAttribute("aria-label", "Portfolio image viewer");
+  lightbox.hidden = true;
+
+  lightbox.innerHTML = `
+    <div class="lightbox-dialog">
+      <button type="button" class="lightbox-close" aria-label="Close image viewer">&#10005;</button>
+      <button type="button" class="lightbox-prev" aria-label="Show previous image">&#10094;</button>
+      <img class="lightbox-image" alt="">
+      <button type="button" class="lightbox-next" aria-label="Show next image">&#10095;</button>
+      <div class="lightbox-caption" aria-live="polite"></div>
+    </div>
+  `;
+
+  document.body.append(lightbox);
+
+  const closeButton = lightbox.querySelector(".lightbox-close");
+  const prevButton = lightbox.querySelector(".lightbox-prev");
+  const nextButton = lightbox.querySelector(".lightbox-next");
+  const image = lightbox.querySelector(".lightbox-image");
+  const caption = lightbox.querySelector(".lightbox-caption");
+
+  closeButton?.addEventListener("click", () => closeLightbox());
+  prevButton?.addEventListener("click", () => showLightboxImage(activeLightboxIndex - 1));
+  nextButton?.addEventListener("click", () => showLightboxImage(activeLightboxIndex + 1));
+
+  lightbox.addEventListener("click", (event) => {
+    const target = event.target;
+    const clickedImage = target instanceof Element && target.closest(".lightbox-image");
+    const clickedNavigation = target instanceof Element && target.closest(".lightbox-prev, .lightbox-next");
+
+    if (!clickedImage && !clickedNavigation) {
+      closeLightbox();
+    }
+  });
+
+  lightboxElements = {
+    lightbox,
+    image,
+    caption,
+    closeButton
+  };
+
+  return lightboxElements;
+}
+
+function showLightboxImage(index) {
+  const visibleImages = getVisiblePortfolioImages();
+
+  if (!visibleImages.length) {
+    return;
+  }
+
+  const lightbox = ensureLightboxElements();
+  activeLightboxIndex = (index + visibleImages.length) % visibleImages.length;
+
+  const currentImage = visibleImages[activeLightboxIndex];
+  const source = currentImage.getAttribute("src") ?? "";
+  const alt = currentImage.getAttribute("alt") ?? "Portfolio image";
+
+  if (lightbox.image) {
+    lightbox.image.setAttribute("src", source);
+    lightbox.image.setAttribute("alt", alt);
+  }
+
+  if (lightbox.caption) {
+    lightbox.caption.textContent = `${activeLightboxIndex + 1} / ${visibleImages.length}`;
+  }
+}
+
+function openLightbox(index) {
+  const lightbox = ensureLightboxElements();
+
+  showLightboxImage(index);
+
+  lightbox.lightbox.hidden = false;
+  requestAnimationFrame(() => {
+    lightbox.lightbox.classList.add("is-open");
+  });
+
+  document.body.classList.add("lightbox-open");
+  lightbox.closeButton?.focus();
+}
+
+function closeLightbox() {
+  const lightbox = ensureLightboxElements();
+
+  lightbox.lightbox.classList.remove("is-open");
+
+  window.setTimeout(() => {
+    if (!lightbox.lightbox.classList.contains("is-open")) {
+      lightbox.lightbox.hidden = true;
+    }
+  }, 200);
+
+  document.body.classList.remove("lightbox-open");
+}
+
+if (portfolioCards.length > 0) {
+  portfolioCards.forEach((card, index) => {
+    card.setAttribute("role", "button");
+    card.setAttribute("tabindex", "0");
+    card.setAttribute("aria-label", `Open portfolio image ${index + 1}`);
+
+    card.addEventListener("click", () => {
+      const visibleCards = getVisiblePortfolioCards();
+      const visibleIndex = visibleCards.indexOf(card);
+
+      if (visibleIndex > -1) {
+        openLightbox(visibleIndex);
+      }
+    });
+
+    card.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        const visibleCards = getVisiblePortfolioCards();
+        const visibleIndex = visibleCards.indexOf(card);
+
+        if (visibleIndex > -1) {
+          openLightbox(visibleIndex);
+        }
+      }
+    });
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (!lightboxElements || lightboxElements.lightbox.hidden) {
+      return;
+    }
+
+    if (event.key === "Escape") {
+      closeLightbox();
+    } else if (event.key === "ArrowLeft") {
+      showLightboxImage(activeLightboxIndex - 1);
+    } else if (event.key === "ArrowRight") {
+      showLightboxImage(activeLightboxIndex + 1);
+    }
+  });
+}
+
 const navMenuToggle = document.getElementById("navMenuToggle");
 const mobileMenu = document.getElementById("mobileMenu");
 const MOBILE_NAV_BREAKPOINT = 1024;

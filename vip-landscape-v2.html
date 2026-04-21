@@ -7,18 +7,23 @@
 <meta name="description" content="Arizona's premier commercial landscape contractor. VIP Landscape Services partners with property managers, HOAs, and commercial real estate portfolios across the Phoenix metro area. ROC #325617.">
 <meta name="keywords" content="commercial landscaping Arizona, commercial landscape contractor Phoenix, HOA landscaping, commercial property maintenance, landscape management Phoenix metro">
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="preload" href="assets/images/optimized/mj-campus-hero.webp" as="image" fetchpriority="high">
 
 <link rel="stylesheet" href="assets/css/vip-landscape-v2.css">
 </head>
-<body>
+<body id="pageTop">
 
 <!-- NAV -->
 <nav id="topnav">
-  <div class="nav-logo">
-    <span class="wordmark">VIP Landscape</span>
-    <span class="sub">Commercial Division</span>
-  </div>
+  <a href="#pageTop" class="nav-logo" aria-label="Back to top">
+    <img
+      src="assets/images/logo.png"
+      alt="VIP Landscape Services"
+      class="nav-logo-image"
+    >
+  </a>
   <ul class="nav-links">
     <li><a href="#services">Services</a></li>
     <li><a href="#why">About</a></li>
@@ -255,44 +260,134 @@
       <div class="section-tag">Selected Work</div>
       <h2 class="section-h2">Portfolio.</h2>
     </div>
+    <p class="portfolio-intro">
+      Actual project photos from completed VIP Landscape jobs across the Phoenix metro area.
+    </p>
   </div>
   <div class="portfolio-grid">
-    <div class="portfolio-card">
-      <img src="assets/images/portfolio-office-grounds.jpg" alt="Commercial office building with professional landscape maintenance — institutional grounds" loading="lazy"/>
-      <div class="portfolio-label-always">
-        <div class="portfolio-name">Commercial Office</div>
-        <div class="portfolio-addr">Institutional Grounds &#183; Phoenix Metro</div>
+    <article class="portfolio-card">
+      <img src="assets/images/optimized/portfolio/img16.webp" alt="Crew member operating mowing equipment along a maintained turf corridor." loading="lazy" decoding="async" fetchpriority="low" width="1200" height="1600"/>
+      <div class="portfolio-meta">
+        <div class="portfolio-tag-pill">Grounds Care</div>
+        <div class="portfolio-name">Active Turf Maintenance</div>
+        <!-- <div class="portfolio-addr">Route Service</div> -->
       </div>
-      <div class="portfolio-overlay">
-        <div class="portfolio-tag-pill">Grounds Management</div>
-        <div class="portfolio-name">Commercial Office Campus</div>
-        <div class="portfolio-addr">Institutional Grounds &#183; Phoenix Metro</div>
+    </article>
+    <article class="portfolio-card">
+      <img src="assets/images/optimized/portfolio/img6.webp" alt="Decorative planter line and clean paving edges in a residential complex courtyard." loading="lazy" decoding="async" fetchpriority="low" width="1200" height="1600"/>
+      <div class="portfolio-meta">
+        <div class="portfolio-tag-pill">Enhancement</div>
+        <div class="portfolio-name">Planter Installation Detail</div>
+        <!-- <div class="portfolio-addr">Common Area</div> -->
       </div>
-    </div>
-    <div class="portfolio-card">
-      <img src="assets/images/portfolio-hardscape-outdoor.jpg" alt="Turf, pavers and hardscape outdoor living space — Arizona residential landscape design" loading="lazy"/>
-      <div class="portfolio-label-always">
-        <div class="portfolio-name">Outdoor Living Build</div>
-        <div class="portfolio-addr">Hardscape &amp; Turf &#183; Arizona</div>
+    </article>
+    <article class="portfolio-card">
+      <img src="assets/images/optimized/portfolio/img15.webp" alt="Tree removal project showing elevated trunk cut and cleanup in progress." loading="lazy" decoding="async" fetchpriority="low" width="738" height="1600"/>
+      <div class="portfolio-meta">
+        <div class="portfolio-tag-pill">Tree Service</div>
+        <div class="portfolio-name">Hazard Tree Removal</div>
+        <!-- <div class="portfolio-addr">Safety Scope</div> -->
       </div>
-      <div class="portfolio-overlay">
-        <div class="portfolio-tag-pill">Hardscape + Turf</div>
-        <div class="portfolio-name">Outdoor Living Build</div>
-        <div class="portfolio-addr">Pavers, Synthetic Turf &amp; Structure</div>
+    </article>
+    <article class="portfolio-card">
+      <img src="assets/images/optimized/portfolio/img14.webp" alt="Material delivery and grading preparation at an active landscape improvement zone." loading="lazy" decoding="async" fetchpriority="low" width="899" height="1600"/>
+      <div class="portfolio-meta">
+        <div class="portfolio-tag-pill">Site Prep</div>
+        <div class="portfolio-name">Material Staging</div>
+        <!-- <div class="portfolio-addr">Enhancement Phase</div> -->
       </div>
-    </div>
-    <div class="portfolio-card">
-      <img src="assets/images/portfolio-desert-xeriscape.jpg" alt="Desert xeriscape landscape design with stepping stones and native plantings — Arizona" loading="lazy"/>
-      <div class="portfolio-label-always">
-        <div class="portfolio-name">Desert Xeriscape</div>
-        <div class="portfolio-addr">Native Plantings &#183; Scottsdale, AZ</div>
+    </article>
+    <article class="portfolio-card" data-portfolio-extra="true" hidden>
+      <img src="assets/images/optimized/portfolio/img3.webp" alt="VIP Landscape branded service truck onsite at a project location." loading="lazy" decoding="async" fetchpriority="low" width="1600" height="1200"/>
+      <div class="portfolio-meta">
+        <div class="portfolio-tag-pill">Onsite Team</div>
+        <div class="portfolio-name">Crew In Service</div>
+        <!-- <div class="portfolio-addr">Valley-Wide Coverage</div> -->
       </div>
-      <div class="portfolio-overlay">
-        <div class="portfolio-tag-pill">Xeriscape Design</div>
-        <div class="portfolio-name">Desert Xeriscape</div>
-        <div class="portfolio-addr">Native Plantings &#183; Scottsdale, AZ</div>
+    </article>
+    <article class="portfolio-card" data-portfolio-extra="true" hidden>
+      <img src="assets/images/optimized/portfolio/img2.webp" alt="Curved turf installation with stone border and clean pathway at a multifamily property." loading="lazy" decoding="async" fetchpriority="low" width="1600" height="1200"/>
+      <div class="portfolio-meta">
+        <div class="portfolio-tag-pill">Turf Install</div>
+        <div class="portfolio-name">Curved Entry Turf</div>
+        <!-- <div class="portfolio-addr">Apartment Community</div> -->
       </div>
-    </div>
+    </article>
+    <article class="portfolio-card" data-portfolio-extra="true" hidden>
+      <img src="assets/images/optimized/portfolio/img10.webp" alt="Freshly striped lawn corridor along a residential walkway." loading="lazy" decoding="async" fetchpriority="low" width="1200" height="1600"/>
+      <div class="portfolio-meta">
+        <div class="portfolio-tag-pill">Maintenance</div>
+        <div class="portfolio-name">Precision Lawn Striping</div>
+        <!-- <div class="portfolio-addr">Residential Grounds</div> -->
+      </div>
+    </article>
+    <article class="portfolio-card" data-portfolio-extra="true" hidden>
+      <img src="assets/images/optimized/portfolio/img1.webp" alt="Synthetic turf area installed along a building edge with clean transitions." loading="lazy" decoding="async" fetchpriority="low" width="1600" height="1200"/>
+      <div class="portfolio-meta">
+        <div class="portfolio-tag-pill">Turf Install</div>
+        <div class="portfolio-name">Courtyard Turf Upgrade</div>
+        <!-- <div class="portfolio-addr">Phoenix Metro</div> -->
+      </div>
+    </article>
+    <article class="portfolio-card" data-portfolio-extra="true" hidden>
+      <img src="assets/images/optimized/portfolio/img4.webp" alt="Striped turf lawn across a residential courtyard with walkways and common seating." loading="lazy" decoding="async" fetchpriority="low" width="1200" height="1600"/>
+      <div class="portfolio-meta">
+        <div class="portfolio-tag-pill">Lawn Care</div>
+        <div class="portfolio-name">Courtyard Striping</div>
+        <!-- <div class="portfolio-addr">HOA Community</div> -->
+      </div>
+    </article>
+    <article class="portfolio-card" data-portfolio-extra="true" hidden>
+      <img src="assets/images/optimized/portfolio/img9.webp" alt="Technician installing traffic calming hardware in a garage drive lane." loading="lazy" decoding="async" fetchpriority="low" width="1200" height="1600"/>
+      <div class="portfolio-meta">
+        <div class="portfolio-tag-pill">Site Safety</div>
+        <div class="portfolio-name">Speed Bump Installation</div>
+        <!-- <div class="portfolio-addr">Property Improvements</div> -->
+      </div>
+    </article>
+    <article class="portfolio-card" data-portfolio-extra="true" hidden>
+      <img src="assets/images/optimized/portfolio/img13.webp" alt="Debris hauling and cleanup operation underway at a multifamily site." loading="lazy" decoding="async" fetchpriority="low" width="909" height="1600"/>
+      <div class="portfolio-meta">
+        <div class="portfolio-tag-pill">Post-Storm Cleanup</div>
+        <div class="portfolio-name">Tree Debris Removal</div>
+        <!-- <div class="portfolio-addr">Post-Storm Service</div> -->
+      </div>
+    </article>
+    <article class="portfolio-card" data-portfolio-extra="true" hidden>
+      <img src="assets/images/optimized/portfolio/img12.webp" alt="Pet relief turf area with perimeter fencing and clean edge transitions." loading="lazy" decoding="async" fetchpriority="low" width="1200" height="1600"/>
+      <div class="portfolio-meta">
+        <div class="portfolio-tag-pill">Amenity Area</div>
+        <div class="portfolio-name">Community Pet Zone</div>
+        <!-- <div class="portfolio-addr">Multi-Family Property</div> -->
+      </div>
+    </article>
+    <article class="portfolio-card" data-portfolio-extra="true" hidden>
+      <img src="assets/images/optimized/portfolio/img5.webp" alt="Planter row and hardscape detail around a multifamily courtyard amenity area." loading="lazy" decoding="async" fetchpriority="low" width="1200" height="1600"/>
+      <div class="portfolio-meta">
+        <div class="portfolio-tag-pill">Enhancement</div>
+        <div class="portfolio-name">Amenity Hardscape Detail</div>
+        <!-- <div class="portfolio-addr">Apartment Property</div> -->
+      </div>
+    </article>
+    <article class="portfolio-card" data-portfolio-extra="true" hidden>
+      <img src="assets/images/optimized/portfolio/img7.webp" alt="Maintained green lawn with tree canopy across a multifamily residential courtyard." loading="lazy" decoding="async" fetchpriority="low" width="1200" height="1600"/>
+      <div class="portfolio-meta">
+        <div class="portfolio-tag-pill">Grounds Care</div>
+        <div class="portfolio-name">Community Lawn Maintenance</div>
+        <!-- <div class="portfolio-addr">Multi-Family Site</div> -->
+      </div>
+    </article>
+    <article class="portfolio-card" data-portfolio-extra="true" hidden>
+      <img src="assets/images/optimized/portfolio/img8.webp" alt="Street-facing turf edge with clean cut lines and maintained tree coverage." loading="lazy" decoding="async" fetchpriority="low" width="1200" height="1600"/>
+      <div class="portfolio-meta">
+        <div class="portfolio-tag-pill">Lawn Care</div>
+        <div class="portfolio-name">Street-Edge Turf Maintenance</div>
+        <!-- <div class="portfolio-addr">Phoenix Metro</div> -->
+      </div>
+    </article>
+  </div>
+  <div class="portfolio-actions">
+    <button type="button" class="portfolio-more-btn" id="portfolioMoreBtn" aria-expanded="false">Show More Work</button>
   </div>
 </section>
 
