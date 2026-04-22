@@ -686,6 +686,7 @@
     .hero {
       min-height: 100svh;
       min-height: 100dvh;
+      min-height: 100lvh;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -838,7 +839,18 @@
   }
 
   @media (max-width: 560px) {
-    .hero-content { padding-bottom: calc(1.7rem + env(safe-area-inset-bottom)); }
+    nav { padding: 0.85rem 1rem; }
+    .nav-logo-image { height: 44px; }
+
+    .hero {
+      min-height: 100lvh;
+      padding-top: calc(102px + env(safe-area-inset-top));
+    }
+    .hero-content {
+      padding-top: 2.9rem;
+      padding-bottom: calc(1.7rem + env(safe-area-inset-bottom));
+      transform: none;
+    }
     .hero-desc { display: none; }
     .hero-desc-mobile {
       display: block;
