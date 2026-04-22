@@ -362,7 +362,7 @@
   .pillar-title { font-family: var(--serif); font-size: clamp(1.32rem, 1.3vw, 1.62rem); font-weight: 400; color: var(--stone); line-height: 1.2; margin-bottom: 0.56rem; }
   .pillar-desc { font-size: clamp(0.93rem, 0.72vw, 1.02rem); line-height: 1.78; color: var(--stone); opacity: 0.68; }
   /* PORTFOLIO */
-  .portfolio { padding: 7rem 5rem; }
+  .portfolio { padding: 7rem 5rem; background: var(--white); }
   .portfolio-header { display: flex; justify-content: space-between; align-items: flex-end; gap: 2rem; margin-bottom: 2.4rem; padding-bottom: 1.6rem; border-bottom: 1px solid rgba(43,43,38,0.1); }
   .portfolio-intro { max-width: 30rem; font-size: 0.84rem; line-height: 1.7; color: rgba(43,43,38,0.64); }
   .portfolio-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; }
