@@ -1,5 +1,39 @@
 {
+  "redirects": [
+    {
+      "source": "/vip-landscape-v2.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/commercial-landscape-maintenance-phoenix.html",
+      "destination": "/commercial-landscape-maintenance-phoenix",
+      "permanent": true
+    },
+    {
+      "source": "/irrigation-water-management-phoenix.html",
+      "destination": "/irrigation-water-management-phoenix",
+      "permanent": true
+    },
+    {
+      "source": "/hardscape-services-phoenix.html",
+      "destination": "/hardscape-services-phoenix",
+      "permanent": true
+    }
+  ],
   "rewrites": [
+    {
+      "source": "/commercial-landscape-maintenance-phoenix",
+      "destination": "/commercial-landscape-maintenance-phoenix.html"
+    },
+    {
+      "source": "/irrigation-water-management-phoenix",
+      "destination": "/irrigation-water-management-phoenix.html"
+    },
+    {
+      "source": "/hardscape-services-phoenix",
+      "destination": "/hardscape-services-phoenix.html"
+    },
     {
       "source": "/",
       "destination": "/vip-landscape-v2.html"

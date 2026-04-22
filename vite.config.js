@@ -16,7 +16,19 @@ export default defineConfig({
   build: {
     rollupOptions: {
       input: {
-        vipLandscapeV2: resolve(__dirname, "vip-landscape-v2.html")
+        vipLandscapeV2: resolve(__dirname, "vip-landscape-v2.html"),
+        commercialLandscapeMaintenancePhoenix: resolve(
+          __dirname,
+          "commercial-landscape-maintenance-phoenix.html"
+        ),
+        irrigationWaterManagementPhoenix: resolve(
+          __dirname,
+          "irrigation-water-management-phoenix.html"
+        ),
+        hardscapeServicesPhoenix: resolve(
+          __dirname,
+          "hardscape-services-phoenix.html"
+        )
       }
     }
   }
