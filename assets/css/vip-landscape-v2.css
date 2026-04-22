@@ -12,7 +12,7 @@
     --sans:    "Barlow", sans-serif;
   }
   html { scroll-behavior: smooth; }
-  body { background: var(--white); color: var(--stone); font-family: var(--sans); font-weight: 300; overflow-x: hidden; }
+  body { background: var(--stone); color: var(--stone); font-family: var(--sans); font-weight: 300; overflow-x: hidden; }
   body.no-scroll { overflow: hidden; }
   body.lightbox-open { overflow: hidden; }
 
@@ -686,7 +686,6 @@
     .hero {
       min-height: 100svh;
       min-height: 100dvh;
-      min-height: 100lvh;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -839,18 +838,7 @@
   }
 
   @media (max-width: 560px) {
-    nav { padding: 0.85rem 1rem; }
-    .nav-logo-image { height: 44px; }
-
-    .hero {
-      min-height: 100lvh;
-      padding-top: calc(102px + env(safe-area-inset-top));
-    }
-    .hero-content {
-      padding-top: 2.9rem;
-      padding-bottom: calc(1.7rem + env(safe-area-inset-bottom));
-      transform: none;
-    }
+    .hero-content { padding-bottom: calc(1.7rem + env(safe-area-inset-bottom)); }
     .hero-desc { display: none; }
     .hero-desc-mobile {
       display: block;
