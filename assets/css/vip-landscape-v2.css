@@ -172,10 +172,10 @@
 
   @media (max-width: 768px) {
     .hero-bg {
-      --hero-scale-end: 1.055;
-      --hero-shift-x: -1%;
-      --hero-shift-y: -1.4%;
-      animation-duration: 20s;
+      --hero-scale-end: 1.065;
+      --hero-shift-x: -1.2%;
+      --hero-shift-y: -1.7%;
+      animation-duration: 19s;
     }
   }
 
