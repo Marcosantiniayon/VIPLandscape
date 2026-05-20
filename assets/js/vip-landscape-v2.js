@@ -1,11 +1,3 @@
-window.addEventListener("load", () => {
-  const heroBg = document.getElementById("heroBg");
-
-  if (heroBg) {
-    heroBg.classList.add("loaded");
-  }
-});
-
 const observer = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
     if (entry.isIntersecting) {
@@ -323,6 +315,18 @@ const navMenuToggle = document.getElementById("navMenuToggle");
 const mobileMenu = document.getElementById("mobileMenu");
 const MOBILE_NAV_BREAKPOINT = 1024;
 
+function trackAnalyticsEvent(eventName, details = {}) {
+  if (typeof window.gtag !== "function") {
+    return;
+  }
+
+  window.gtag("event", eventName, {
+    page_path: window.location.pathname,
+    page_title: document.title,
+    ...details
+  });
+}
+
 function setMobileMenuOpen(isOpen) {
   if (!navMenuToggle || !mobileMenu) {
     return;
@@ -359,6 +363,18 @@ if (navMenuToggle && mobileMenu) {
     }
   });
 }
+
+document.querySelectorAll('a[href^="tel:"], a[href^="mailto:"]').forEach((link) => {
+  link.addEventListener("click", () => {
+    const href = link.getAttribute("href") ?? "";
+    const isPhoneLink = href.startsWith("tel:");
+    const eventName = isPhoneLink ? "phone_click" : "email_click";
+
+    trackAnalyticsEvent(eventName, {
+      contact_method: isPhoneLink ? "phone" : "email"
+    });
+  });
+});
 
 const proposalForm = document.getElementById("proposalForm");
 const proposalStatus = document.getElementById("proposalStatus");
@@ -531,6 +547,10 @@ if (proposalForm) {
         syncGroupPanels();
         syncOtherServiceField();
         updateRequestSummary();
+        trackAnalyticsEvent("generate_lead", {
+          form_id: "proposalForm",
+          lead_type: "proposal_request"
+        });
 
         if (proposalStatus) {
           proposalStatus.hidden = false;

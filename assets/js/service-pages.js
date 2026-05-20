@@ -9,10 +9,11 @@ window.addEventListener("DOMContentLoaded", () => {
       }
 
       const href = link.getAttribute("href") || "";
-      const eventName = href.startsWith("tel:") ? "phone_click" : "email_click";
+      const isPhoneLink = href.startsWith("tel:");
+      const eventName = isPhoneLink ? "phone_click" : "email_click";
 
       window.gtag("event", eventName, {
-        link_url: href,
+        contact_method: isPhoneLink ? "phone" : "email",
         page_path: window.location.pathname,
         page_title: document.title
       });
